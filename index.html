@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DataBall</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+
+    <link rel="icon" type="image/png" href="images/DataBall_favicon.svg">
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+        table,
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    <div class = edge-border></div>
+    <img src="images/DataBall_Title_Pic.svg" alt="DataBall_Logo" class="pfp"/>
+    <!-- <p class = "title_line">Welcome to DataBall!!</p> -->
+
+    <p class="intro_paragraphs"><strong>Problem:</strong> While baseball data is widely available on the internet, 
+        it is difficult to use, even for experienced enthusiasts. 
+        There is also a lack of services that provide an easy and quick 
+        visualizations to view and compare historical statistics.
+    </p>
+    <p class="intro_paragraphs"><strong>Solution:<i> DataBall!</i></strong> 
+        DataBall makes it easier than ever to compare player historical data, filtered via year and position, as well as
+        compare two individual players in detail.
+        DataBall also gamifies the world of baseball statistics by allowing you to create your own <i>dream team</i> and 
+        seeing how it matches up against real historical teams.
+        <strong><i>Give it a try and see how your team would do if it were in the MLB!</i></strong>
+    </p>
+    <div class="P-bottom-text"><i>Note: </i>Definitions of statistics can be found at the bottom of the page.</div>
+
+    <div class="space"></div>
+    <div class="space"></div>
+
+    <p class="intro_paragraphs"><strong>Get started!</strong>
+    </p>
+
+    <p class="directions_paragraphs2"><strong> Select a year and position.</strong></p>
+    
+    <div class = "scatter_button">
+        <button type="button" onclick="resetScatterPlots()">Reset Scatter Plots</button>
+    </div>
+
+    <div class="yearbutton">
+        <label for="year">Year:</label>
+        <select id="year" onchange="filterDataByYear()">
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
+            <option value="2019">2019</option>
+            <option value="2018">2018</option>
+            <option value="2017">2017</option>
+        </select>
+    </div>
+    
+    
+    <div class = position_buttons>
+        <div id="Position">
+            <button class="btn active" onclick="filterDataByYear()"> Show all</button>
+            <button class="btn" onclick="filterDataByPositionAndYear('C')">C</button>
+            <button class="btn" onclick="filterDataByPositionAndYear('1B')">1B</button>
+            <button class="btn" onclick="filterDataByPositionAndYear('2B')">2B</button>
+            <button class="btn" onclick="filterDataByPositionAndYear('3B')">3B</button>
+            <button class="btn" onclick="filterDataByPositionAndYear('SS')">SS</button>
+            <button class="btn" onclick="filterDataByPositionAndYear('LF')">LF</button>
+            <button class="btn" onclick="filterDataByPositionAndYear('CF')">CF</button>
+            <button class="btn" onclick="filterDataByPositionAndYear('RF')">RF</button>
+            <button class="btn" onclick="filterDataByPositionAndYear('DH/UTL')">DH/UTL</button>
+        </div>
+    </div>
+    
+    <div class="space"></div>
+    <div class="space"></div>
+    <div class="space"></div>
+   
+    <p class="directions_paragraphs2"><strong>Select players of interest.</strong></p> 
+
+    <!-- #Player 1 dropdown box-->
+    <div>
+        <div class="P1_button">
+            <label for="player1">Player 1:</label>
+            <select id="player1" onchange="updatePlot()">
+            </select>
+        </div>
+
+
+        <!-- #Player 2 dropdown box-->
+        <div class="P2_button">
+            <label for="player2">Player 2:</label>
+            <select id="player2" onchange="updatePlot()">
+            </select>
+        </div>
+    </div>
+
+    <div class = "time-series-y-label">
+        <div>
+            <label for="y-axisLine">Y-Axis Line:</label>
+            <select id="y-axisLine" onchange="updatePlot()">
+                <option value="BA">BA</option>
+                <option value="OBP">OBP</option>
+                <option value="SLG">SLG</option>
+                <option value="OPS">OPS</option>
+                <option value="OPS+">OPS+</option>
+            </select>
+        </div>
+    </div>
+
+    <div class = "scatterplot-container">
+        <div class = "scatterplot" id="plot-containerScatter"></div>
+    </div>
+   
+   <div class = "bubbleplot-container">
+        <div class = "bubbleplot" id="plot-containerBubble"></div>
+    </div>
+
+    <div class = "barplots-container">
+        <div id="plot-containerBarH"></div>
+        <div id="plot-containerBarHR"></div>
+        <div id="plot-containerBarRBI"></div>
+        <div id="plot-containerBarSB"></div>
+    </div>
+
+    <div class = "lineplot-container">
+        <div id="plot-containerLine"></div>
+    </div>
+   
+    <div class = "BballDiamond-container">
+        <div id="plot-containerDiamond"></div>
+    </div>
+
+    <script src="plots.js"></script>
+
+
+    <div class = selection_buttons>
+        <div id="Position">
+            <button class="btn" onclick="player1Selected()">Select Player 1</button> 
+            <button class="btn" onclick="player2Selected()">Select Player 2</button>
+            <div class="space"></div>
+            <button class="btn" onclick="finalizeTeam()">Finalize My Dream Team</button>  
+        </div>
+    </div>
+    
+
+    <script>
+        // This script reupdates the .edge-border .css class to keep the same
+        // border colors as the user scrolls down the page
+
+        window.addEventListener('scroll', function() {
+        var scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        var edgeBorder = document.querySelector('.edge-border');
+        
+        // Calculate the opacity based on the scroll position
+        var opacity = 1 - (scrollPosition / (document.documentElement.scrollHeight - window.innerHeight));
+        
+        // Update the background colors with the updated opacity
+        edgeBorder.style.setProperty('--after-bg-color', 'rgba(0, 45, 114,)');
+        edgeBorder.style.setProperty('--before-bg-color', 'rgba(0, 45, 114,)');
+        });
+    </script>
+    
+    <div class="space"></div>
+    <div class="space"></div>
+    <div class="space"></div>
+    <div class="space"></div>
+    <div class="space"></div>
+    <div class="space"></div>
+    <p class="directions_paragraphs2"><strong>How does your team stand?</strong></p> 
+    <div class="space"></div>
+
+    <div class="directions_paragraphs" id="CText"><strong>Catcher: </strong></div>
+    <div class="directions_paragraphs" id="1BText"><strong>First Baseman: </strong></div>
+    <div class="directions_paragraphs" id="2BText"><strong>Second Baseman: </strong></div>
+    <div class="directions_paragraphs" id="3BText"><strong>Third Baseman: </strong></div>
+    <div class="directions_paragraphs" id="SSText"><strong>Shortstop: </strong></div>
+    <div class="directions_paragraphs" id="LFText"><strong>Left Fielder: </strong></div>
+    <div class="directions_paragraphs" id="CFText"><strong>Center Fielder: </strong></div>
+    <div class="directions_paragraphs" id="RFText"><strong>Right Fielder: </strong></div>
+    <div class="directions_paragraphs" id="DHText"><strong>Designated Hitter/Utility: </strong></div>
+
+    <div class="BP-bottom-text"><i>Note: </i>Vertical and horizontal lines are league averages for the selected year.</div>
+
+    <div class="space"></div>
+    <div class="space"></div>
+
+
+    <div class="directions_paragraphs2"><strong>Your Team Statistics</strong></div>
+
+    <div class="tempLeft">
+        <table>
+            <thead>
+                <tr>
+                    <th>Statistic</th>
+                    <th>BA</th>
+                    <th>SLG</th>
+                    <th>HR</th>
+                    <th>SB</th>
+                    <th>SO</th>
+                    <th>BB</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Value</td>
+                    <td id="BATable"></td>
+                    <td id="SLGTable"></td>
+                    <td id="HRTable"></td>
+                    <td id="SBTable"></td>
+                    <td id="SOTable"></td>
+                    <td id="BBTable"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="space"></div>
+    <div class="space"></div>
+    <p class="directions_paragraphs2"><strong> Learn more about each statistic.</strong></p>
+
+    <div class="stats-defns-button-container-1">
+        <button class="toggle-button" onclick="toggleText('textBA')">Batting Average (BA)</button>
+        <p id="textBA" style="display: none;">
+            <strong>BA:</strong> BA stands for batting average and represents the player's frequency of obtaining a hit.
+            This stat is calculated by dividing a player's hits by his total at-bats.<br><br>        
+        </p> 
+        <button class="toggle-button" onclick="toggleText('textOBP')">On-base Percentage (OBP)</button>
+        <p id="textOBP" style="display: none;">
+            <strong>OBP:</strong> OBP stands for on-base percentage and represents the player's ability to avoid getting out and reach base. 
+            This stat is calculated by dividing a player's total times on base by his total plate appearances. 
+            Times on base include hits, walks, and hit by pitches but do not include errors, fielder choices, and dropped third strikes.<br><br>        
+        </p> 
+        <button class="toggle-button" onclick="toggleText('textSLG')">Slugging Percentage (SLG)</button>
+        <p id="textSLG" style="display: none;">
+            <strong>SLG:</strong> SLG stands for slugging percentage and represents the total number of bases a player records per at-bat, or more simply, a player's power.
+            This stat is calculated by dividing the total number of hits (weighted by number of bases per hit) divided by total number of at-bats.
+        </p>
+    </div>
+
+    <div class="stats-defns-button-container-2">
+        <button class="toggle-button" onclick="toggleText('textOPS')">On-base Plus Slugging (OPS)</button>
+        <p id="textOPS" style="display: none;">
+            <strong>OPS:</strong> OPS stands for on-base and slugging and represents the player's overall ability to reach base in addition to their power.
+            This stat is calculated by adding a player's OBP and SLG together.
+        </p>
+        <button class="toggle-button" onclick="toggleText('textOPS+')">On-base Plus Slugging Plus (OPS+)</button>
+        <p id="textOPS+" style="display: none;">
+            <strong>OPS+:</strong> OPS+ stands for on-base and slugging plus and represents the player's overall ability to reach base in addition to their power in comparison to the rest of the MLB.
+            This stat is calculated by normalizing a player's OPS to the league average. 
+            A player at league average will have an OPS+ of 100 and each point above or below 100 represents one percentage point above or below league average.
+            For example, a player with an OPS+ of 125 is 25% better than league average.
+        </p>  
+        <button class="toggle-button" onclick="toggleText('textHR')">Home Run (HR)</button>
+        <p id="textHR" style="display: none;">
+            <strong>HR:</strong> HR stands for home run. This occurs when a batter hits a fair ball and scores on the same play.
+            This is usually done by hitting a ball over the outfield fence.<br><br>
+        </p>
+    </div>
+
+    <div class="stats-defns-button-container-3">
+        <button class="toggle-button" onclick="toggleText('textSB')">Stolen Base (SB)</button>
+        <p id="textSB" style="display: none;">
+            <strong>SB:</strong> SB stands for stolen base. This occurs when a baserunner successfully advances a base to which he is not entitled to.
+            This usually occurs when a pitcher is throwing a pitch.
+        </p>
+        <button class="toggle-button" onclick="toggleText('textSO')">Strikeout (SO)</button>
+        <p id="textSO" style="display: none;">
+            <strong>SO:</strong> SO stands for strikeout. This occurs when a batter accumilates three strikes, resulting in an out.
+            A strike occurs when a batter swings and misses at a pitch, looks at a pitch within the strike zone, or hits a foul ball.
+            A batter cannot strikeout on a foul ball.<br><br>
+        </p>
+        <button class="toggle-button" onclick="toggleText('textBB')">Walk (BB)</button>
+        <p id="textBB" style="display: none;">
+            <strong>BB:</strong> BB stands for walk, or base on balls. This occurs when a pitcher throws four pitches outside the strike zone that are not swung at by the batter. 
+            The batter is awarded first base as a result of a walk.
+        </p>
+    </div>
+
+
+</body>
+</html>

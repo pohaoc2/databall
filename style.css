@@ -1,0 +1,289 @@
+
+.pfp {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    width: 300px; /* == (400px + 20px + 20px) * .5 = 220px */
+    height: auto; /* == (160px + 30px + 30px) * .25 = 55px */
+
+}
+
+.space {
+    height: 20px;
+}
+
+.title_line {
+    display: block;
+    margin: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    font-family: verdana;
+
+}
+
+/* Assigns edge border color and width to the page */ 
+.edge-border::after,
+.edge-border::before {
+  height: 100vh;
+  content: ' ';
+  position: fixed;
+  top: 0;
+  width: 3%;
+}
+
+.edge-border::after {
+  right: 0;
+  background-color: #002d72;
+}
+
+.edge-border::before {
+  left: 0;
+  background-color: #002d72;
+}
+
+.intro_paragraphs {
+    font-size: 14px;
+    font-family: verdana;
+    padding-left: 4%;
+    padding-right: 4%;
+}
+
+.scatter_button {
+    margin: 16px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 14px;
+    width: 150px;
+    height: 30px;
+    font-family: verdana;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.scatterplot-container {
+    height: 250px;
+    position: absolute;
+    top: 285px;
+    left: 21%;
+    padding-left: 4%;
+    padding-right: 4%;
+}
+
+.scatterplot {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+}
+
+.bubbleplot-container {
+    height: 250px;
+    position: absolute;
+    top: 970px;
+    left: 21%;
+    padding-left: 4%;
+    padding-right: 4%;
+}
+
+.directions_paragraphs {
+    font-size: 12px;
+    font-family: verdana;
+    padding-left: 4%;
+    padding-right: 4%;
+    position: inherit;
+    width: 250px;
+    height: 30px;
+
+}   
+
+.directions_paragraphs2 {
+    font-size: 14px;
+    font-family: verdana;
+    padding-left: 4%;
+    padding-right: 4%;
+    position: inherit;
+}
+
+.header2 {
+    display: block;
+    margin: 16px;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: verdana;
+
+}
+
+.yearbutton  {
+    margin: 16px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 14px;
+    width: 150px;
+    height: 30px;
+    font-family: verdana;
+    padding-left: 3%;
+    padding-right: 3%;
+    /* padding: 5px 10px; /* Control the spacing inside and around the button */
+    /* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /*Apply a box shadow to the button */
+   
+}
+
+.position_buttons {
+    margin: 16px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 14px;
+    width: 200px;
+    height: 60px;
+    font-family: verdana;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.P2_button {
+    /*position: relative;
+    top: -57px;
+    left: 200px;
+    */
+    margin: 16px;
+    font-size: 14px;
+    width: 150px;
+    height: 40px;
+    font-family: verdana;
+    padding-left: 3%;
+    padding-right: 3%;
+
+    /* padding: 5px 10px; /* Control the spacing inside and around the button */
+    /* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /*Apply a box shadow to the button */
+   
+}
+
+.P1_button {
+    /* position: relative;
+    top: -50px;
+    */
+    margin: 16px;
+    font-size: 14px;
+    width: 150px;
+    height: 40px;
+    font-family: verdana;
+    padding-left: 3%;
+    padding-right: 3%;
+
+    /* padding: 5px 10px; /* Control the spacing inside and around the button */
+    /* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /*Apply a box shadow to the button */
+}
+
+.time-series-y-label {
+    margin: 16px;
+    font-size: 10px;
+    width: 150px;
+    height: 40px;
+    font-family: verdana;
+    padding-left: 3%;
+    padding-right: 3%;
+    position: absolute;
+    left: 82%;
+    top: 680px;
+    z-index:999;
+}
+
+.barplots-container {
+    height: 250px;
+    position: absolute;
+    top: 600px;
+    left: 19%;
+    padding-left: 4%;
+    padding-right: 4%;
+}
+
+.lineplot-container {
+    height: 250px;
+    position: absolute;
+    z-index:1;
+    top: 600px;
+    left: 62%;
+    padding-left: 4%;
+    padding-right: 4%;  
+
+}
+
+.BballDiamond-container {
+    position: absolute;
+    top:1100px;
+    padding-left: 4%;
+    padding-right: 4%;  
+
+}
+
+.show {
+    display: block !important;
+}
+.stats-defns-button-container-1 {
+    display: flex;
+    align-items: center;
+    margin-right: 4%;
+    position: relative;
+    z-index: 2;
+}
+.stats-defns-button-container-2 {
+    display: flex;
+    align-items: center;
+    margin-right: 4%;
+    position: relative;
+    z-index: 2;
+}
+
+.stats-defns-button-container-3 {
+    display: flex;
+    align-items: center;
+    margin-right: 4%;
+    position: relative;
+    z-index: 2;
+}
+
+.toggle-button {
+    margin-bottom: 40px; /* Add margin bottom to create spacing between buttons */
+    margin-left: 85px;
+    margin-right: 10px; /* Add margin right to create spacing between buttons */
+    }
+
+.selection_buttons {
+    margin: 16px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 14px;
+    width: 600px;
+    height: 60px;
+    font-family: verdana;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.tempLeft {
+    padding-left: 4%;
+    position: absolute;
+    top:1310px;
+    left:15%;
+
+  }
+
+.BP-bottom-text {
+    padding-left: 4%;
+    padding-right: 4%;  
+    position: absolute;
+    top:1270px;
+    left:55%;
+    font-size: 10px;
+    font-family: verdana;
+}
+
+.P-bottom-text {
+    position: absolute;
+    top:242px;
+    left:57%;
+    font-size: 10px;
+    font-family: verdana;
+}
