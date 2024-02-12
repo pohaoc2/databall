@@ -4,3 +4,8 @@ DataBall makes it easier than ever to not only compare players historical data, 
 YouTube video: https://www.youtube.com/watch?v=RegKGtwYPug
 
 Note: Databall’s viewing experience was optimized on a 1900 x 1200 display resolution. Viewing on another resolution will req manually resizing the site (via zooming in/out) and then refreshing the page.
+
+# Contributors
+- Po-Hao Chiu
+- Anthony Romero
+- Derrick Ong
